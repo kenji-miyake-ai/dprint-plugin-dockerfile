@@ -2,6 +2,7 @@ use dockerfile_parser::*;
 use dprint_core::formatting::ir_helpers::gen_from_raw_string;
 use dprint_core::formatting::ir_helpers::SingleLineOptions;
 use dprint_core::formatting::*;
+use regex::Regex;
 
 use super::context::Context;
 use super::helpers::*;
@@ -311,7 +312,7 @@ fn gen_string<'a>(node: &'a SpannedString, context: &mut Context<'a>) -> PrintIt
     } else {
       true
     };
-    let text = context.span_text(&node.span);
+    let text = Regex::new(r"\s{2,}").unwrap().replace_all(context.span_text(&node.span), " ");
     if should_trim {
       text.trim().to_string()
     } else {
