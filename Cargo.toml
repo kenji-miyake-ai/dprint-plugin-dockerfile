@@ -12,6 +12,10 @@ description = "A WIP dockerfile formatter for dprint."
 [lib]
 crate-type = ["lib", "cdylib"]
 
+[[bin]]
+name = "dprint-plugin-dockerfile"
+path = "src/main.rs"
+
 [profile.release]
 opt-level = 3
 debug = false
