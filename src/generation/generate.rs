@@ -300,7 +300,7 @@ fn gen_string<'a>(node: &'a SpannedString, context: &mut Context<'a>) -> PrintIt
   let mut items = PrintItems::new();
   let text = if context.gen_string_content {
     // don't trim this because it's the content
-    &node.content
+    node.content.to_string()
   } else {
     let should_trim = if let Some(Node::BreakableString(parent)) = context.parent() {
       if let Some(BreakableStringComponent::String(str)) = parent.components.first() {
@@ -313,12 +313,12 @@ fn gen_string<'a>(node: &'a SpannedString, context: &mut Context<'a>) -> PrintIt
     };
     let text = context.span_text(&node.span);
     if should_trim {
-      text.trim()
+      text.trim().to_string()
     } else {
-      text.trim_end()
+      format!("  {}", text.trim())
     }
   };
-  items.extend(gen_from_raw_string(text));
+  items.extend(gen_from_raw_string(&text));
   items
 }
 
